@@ -13,24 +13,19 @@ Packages: `nodemon@2.0.16` & `dotenv@16.0.1` <br>
 
 ## Application Routing
 ```
-GET     /                         read a page rendering all restaurants
-POST    /restaurants              create new restaurant in MongoDB
-GET     /restaurants/new          read a page rendering a form to create a restaurant data
-GET     /restaurants/:id          read a page rendering a specific restaurant
-GET     /restaurants/:id/edit     read a page rendering a form to edit an existing restaurant data
-PUT     /restaurants/:id          modify an existing restaurant data based on form input
-DELETE  /restaurants/:id          remove a specific restaurant from MongoDB
-GET     /search                   read a page rendering search result from MongoDB using users' keyword
+GET     /                         render a page for url input
+POST    /urls                     create a new url in MongoDB
+GET     /:shortUrl                redirect to original url
 ```
 <br><br><br>
 
 ## Instructions
 #### step1: Clone a local copy by
-`git clone https://github.com/yumingchang1991/alpha-camp-restaurants`
+`git clone https://github.com/yumingchang1991/alpha-camp-url-shortener`
 <br><br>
 
 #### step2: Change Directory to the copy
-`cd alpha-camp-restaurants`
+`cd alpha-camp-url-shortener`
 <br><br>
 
 #### step3: Install dependencies
@@ -38,7 +33,7 @@ Type in command line below to automatically install dependencies listed in packa
 `npm i` <br>
 
 **NOTE**
-- Font awesome & Bootstrap are linked through CDN. no actions from you, YAY!
+- Font awesome are linked through CDN. no actions from you, YAY!
 <br><br>
 
 #### step4: add environment variable to connect to your MongoDB
