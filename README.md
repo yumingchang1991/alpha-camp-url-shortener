@@ -19,6 +19,23 @@ GET     /:shortUrl                redirect to original url
 ```
 <br><br><br>
 
+## URL Mongoose SchemaType
+```
+URL = {
+  originUrl: {
+    type: String,
+    required: true
+  },
+  shortenPath: {
+    type: String,
+    required: true,
+    minLength: 5,
+    maxLength: 5
+  }
+}
+```
+<br><br><br>
+
 ## Instructions
 #### step1: Clone a local copy by
 `git clone https://github.com/yumingchang1991/alpha-camp-url-shortener`
