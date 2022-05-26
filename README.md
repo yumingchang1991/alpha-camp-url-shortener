@@ -8,7 +8,6 @@ Runtime: `node@16.13.0` <br>
 Framework: `express@4.18.1` <br>
 Database: `MongoDB Atlas` + `mongoose@6.3.3` <br>
 View Engine: `express-handlebars@6.0.5` <br>
-Packages: `nodemon@2.0.16` & `dotenv@16.0.1` <br>
 <br><br><br>
 
 ## Application Routing
@@ -17,6 +16,24 @@ GET     /                         render a page for url input
 POST    /urls                     create a new url in MongoDB
 GET     /:shortUrl                redirect to original url
 ```
+<br><br><br>
+
+## Client State
+| STATE       | DEFINITION                             | STARTS ON                             | ENDS ON                |
+| ----------- | -------------------------------------- | ------------------------------------- | ---------------------- |
+| Awaiting    | app waits for user url input           | `app.load` <br> `anotherButton.click` | `shortenButton.click`  |
+| Processing  | user click shorten to send data to app | `shortenButton.click`                 | when data fetched      |
+| Completed   | app returns shortened url to browser   | when data fetched                     | `anotherButton.click`  |
+
+<br><br><br>
+
+## Client State & Program Flow
+| STATE       | PROGRAM FLOW                                                     |
+| ----------- | ---------------------------------------------------------------- |
+| Awaiting    | `load/mouseenter/mouseleave` -> toggle focus effect -> `click`   |
+| Processing  | -> remove listener -> data fetch in JSON                         |
+| Completed   | -> render `shorten-URL` and `copyButton` and `goBackButton`      |
+
 <br><br><br>
 
 ## URL Mongoose SchemaType
