@@ -7,7 +7,7 @@ html,
 }
 
 body {
-  overflow: hidden;
+  overflow-x: hidden;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -60,5 +60,11 @@ footer {
 @media (min-width: 768px) {
   .app {
     transform: scale(2) translateY(100px);
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    align-items: flex-start;
   }
 }
