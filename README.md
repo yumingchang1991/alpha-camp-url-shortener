@@ -28,11 +28,22 @@ GET     /:shortUrl                redirect to original url
 <br><br><br>
 
 ## Client State & Program Flow
-| STATE       | PROGRAM FLOW                                                     |
-| ----------- | ---------------------------------------------------------------- |
-| Awaiting    | `load/mouseenter/mouseleave` -> toggle focus effect -> `click`   |
-| Processing  | -> remove listener -> data fetch in JSON                         |
-| Completed   | -> render `shorten-URL` and `copyButton` and `goBackButton`      |
+| STATE       | USER ACTION                   | CLIENT                     | SERVER                                    |
+| ----------- | ----------------------------- | -------------------------- | ----------------------------------------- |
+| x           | browse to url shortener app   | x                          | x                                         |
+| x           | x                             | x                          | receive GET request & render index page   |
+| awaiting    | x                             | initialize shortener       | x                                         |
+| awaiting    | type/paste url                | x                          | x                                         |
+| awaiting    | click "shorten" button        | x                          | x                                         |
+| awaiting    | x                             | validate url input         | x                                         |
+| processing  | x                             | change state to processing | x                                         |
+| processing  | x                             | fetch data                 | x                                         |
+| processing  | x                             | x                          | receive POST request, from methodoverride |
+| processing  | x                             | x                          | find url in MongoDB, and send JSON back   |
+| processing  | x                             | receive JSON & render page | x                                         |
+| completed   | x                             | change state to completed  | x                                         |
+| completed   | click "copy" button           | copy shorten url to board  | x                                         |
+| completed   | click "go back" button        | initialize shortener       | x                                         |
 
 <br><br><br>
 
