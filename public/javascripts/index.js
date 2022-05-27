@@ -105,12 +105,10 @@ const view = {
     addFocusEffect(e) {
       BODY.classList.add(stringStore.class.BACKGROUNDGRAY)
       icon.classList.add(stringStore.class.ROTATE)
-      console.log('add focus')
     },
     removeFocusEffect(e) {
       BODY.classList.remove(stringStore.class.BACKGROUNDGRAY)
       icon.classList.remove(stringStore.class.ROTATE)
-      console.log('remove focus')
     },
     submitURL(e) {
       if (!utility.isUrlValid()) {
