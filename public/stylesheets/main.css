@@ -26,7 +26,7 @@ body {
 }
 
 h1:hover,
-input:hover,
+div.url:hover,
 i:hover,
 footer:hover,
 button:hover {
@@ -43,7 +43,7 @@ i {
   color: salmon;
 }
 
-form {
+div.input-container {
   display: flex;
   flex-direction: column;
   justify-content: center;

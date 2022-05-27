@@ -1,12 +1,36 @@
+// this synthetic event will be placed on .app
+// const eventReceiveUrl = new Event('receiveUrl')
+// const APP = document.querySelector('.app')
+ 
+// var declaration
 const HEAD = document.getElementsByTagName('HEAD')[0]
 const BODY = document.getElementsByTagName('BODY')[0]
 const icon = document.getElementsByTagName('i')[0]
-const inputUrl = document.querySelector('input[type="url"]')
-const button = document.querySelector('button')
+const urlInput = document.querySelector('div.url')
+const shortenButton = document.getElementById('shorten-button')
+const completedButtonWrapper = document.getElementById('completed-button-wrapper')
+const copyButton = document.getElementById('copy-button')
+const backButton = document.getElementById('back-button')
+
+const stringStore = {
+  state: {
+    AWAITING: 'awaiting',
+    PROCESSING: 'processing',
+    COMPLETED: 'completed'
+  },
+
+  class: {
+    ROTATE: 'rotate-180',
+    ROLL: 'roll',
+    BACKGROUNDGRAY: 'background-gray',
+    PROCESSING: 'processing',
+    DISPLAYNONE: 'display-none'
+  }
+}
 
 const utility = {
   isUrlValid() {
-    return inputUrl.value.length > 0
+    return urlInput.textContent.trim().length > 0
   },
 
   isResponseValid(res) {
@@ -22,25 +46,12 @@ const model = {
   currentState: 'awaiting',
   urlReturned: {},
 
-  stateStore: {
-    awaiting: 'awaiting',
-    processing: 'processing',
-    completed: 'completed'
-  },
-
-  classStore: {
-    rotate: 'rotate-180',
-    roll: 'roll',
-    backgroundGray: 'background-gray',
-    processing: 'processing'
-  },
-
   async fetchingData() {
     const path = '/urls'
     const APIEndpoint = window.location.origin + path
     let urlReturned = Object.create(null)
     await axios
-      .post(APIEndpoint, { originalUrl: inputUrl.value })
+      .post(APIEndpoint, { originalUrl: urlInput.textContent.trim() })
       .then(response => {
         if (!utility.isResponseValid(response)) {
           // error handling will go here
@@ -67,104 +78,130 @@ const view = {
   },
 
   renderShortenPath(url) {
-
-  },
-  renderCopyButton() {
-
+    urlInput.textContent = `${window.location.origin}/${model.urlReturned.shortenPath}`
+    urlInput.setAttribute('contenteditable', false)
   },
 
-  toggleProcessingAnimation(isEnteringProcessing = true) {
-    if (isEnteringProcessing) {
-      icon.classList.remove(model.classStore.rotate)
-      icon.classList.add(model.classStore.roll)
-      view.eventListeners.toggleFocusEffect(false)
-      button.setAttribute('disabled', true)
-      button.textContent = model.currentState
-      button.classList.add(model.classStore.processing)
+  renderButtons(isShorten = true, isCompleted = true) {
+    if (isShorten && !isCompleted) {
+      shortenButton.classList.remove(stringStore.class.DISPLAYNONE)
+      completedButtonWrapper.classList.add(stringStore.class.DISPLAYNONE)
       return
     }
-    icon.classList.remove(model.classStore.roll)
-    view.eventListeners.toggleFocusEffect(true)
-    button.setAttribute('disabled', false)
-    button.textContent = 'Click to Copy'
-    button.classList.remove(model.classStore.processing)
+    if (!isShorten && isCompleted) {
+      shortenButton.classList.add(stringStore.class.DISPLAYNONE)
+      completedButtonWrapper.classList.remove(stringStore.class.DISPLAYNONE)
+      return
+    }
+    if (!isShorten && !isCompleted) {
+      shortenButton.classList.remove(stringStore.class.DISPLAYNONE)
+      completedButtonWrapper.classList.remove(stringStore.class.DISPLAYNONE)
+      return
+    }
+    console.log('error: cannot display shorten button & completed buttons at the same time')
   },
 
   eventHandlers: {
     addFocusEffect(e) {
-      BODY.classList.add(model.classStore.backgroundGray)
-      icon.classList.add(model.classStore.rotate)
+      BODY.classList.add(stringStore.class.BACKGROUNDGRAY)
+      icon.classList.add(stringStore.class.ROTATE)
+      console.log('add focus')
     },
     removeFocusEffect(e) {
-      BODY.classList.remove(model.classStore.backgroundGray)
-      icon.classList.remove(model.classStore.rotate)
+      BODY.classList.remove(stringStore.class.BACKGROUNDGRAY)
+      icon.classList.remove(stringStore.class.ROTATE)
+      console.log('remove focus')
     },
     submitURL(e) {
       if (!utility.isUrlValid()) {
         alert('Please enter a valid url')
         return
       }
-      model.currentState = model.stateStore.processing
+      view.renderButtons(false, false)
+      model.currentState = stringStore.state.PROCESSING
       controller.run(model.currentState)
+    },
+    copyToBoard(e) {
+      navigator.clipboard.writeText(urlInput.textContent)
+      alert('shortenPath is copied to clipboard!')
+    },
+    redirectToHome(e) {
+      window.location.replace(window.location.origin)
     }
   },
 
   eventListeners: {
-    addAwaitingListener() {
-      view.eventListeners.toggleFocusEffect(true)
-      button.addEventListener('click', view.eventHandlers.submitURL)
-    },
-
-    toggleFocusEffect(toBeAdded = true) {
-      if (toBeAdded) {
-        button.addEventListener('mouseenter', view.eventHandlers.addFocusEffect)
-        button.addEventListener('mouseleave', view.eventHandlers.removeFocusEffect)
-        return
-      }
-      button.removeEventListener('mouseenter', view.eventHandlers.addFocusEffect)
-      button.removeEventListener('mouseleave', view.eventHandlers.removeFocusEffect)
+    addButtonListeners() {
+      shortenButton.addEventListener('click', view.eventHandlers.submitURL)
+      shortenButton.addEventListener('mouseenter', view.eventHandlers.addFocusEffect)
+      shortenButton.addEventListener('mouseleave', view.eventHandlers.removeFocusEffect)
+      copyButton.addEventListener('click', view.eventHandlers.copyToBoard)
+      backButton.addEventListener('click', view.eventHandlers.redirectToHome)
     }
-  }
+  },
+
+  toggleProcessingAnimation(isEnteringProcessing = true) {
+    if (isEnteringProcessing) {
+      // add animation
+      icon.classList.remove(stringStore.class.ROTATE)
+      icon.classList.add(stringStore.class.ROLL)
+      // view when processing
+      urlInput.disabled = true
+      return
+    }
+    // remove animation
+    icon.classList.remove(stringStore.class.ROLL)
+    icon.classList.add(stringStore.class.ROTATE)
+    // view when completed
+    urlInput.disabled = false
+  },
 }
 
 const controller = {
+  initializeApp() {
+    view.addCSSLinkToHead()
+    view.eventListeners.addButtonListeners()
+    console.log('Welcome to URL Shortener, designed by')
+    console.log('%c Yu-Ming, Chang', 'font-size:3rem; color: orange')
+    console.log('https://yumingchang1991.github.io/personal-portfolio/')
+  },
+  
   run(currentState) {
     switch (currentState) {
       case '':
-      case model.stateStore.awaiting:
+      case stringStore.state.AWAITING:
         controller.runAwaiting()
         break
-      case model.stateStore.processing: {
+      case stringStore.state.PROCESSING: {
         controller.runProcessing()
         break
       }
-      case model.stateStore.completed:
+      case stringStore.state.COMPLETED:
+        console.log('running completed branch')
         controller.runCompleted()
         break
-      default:
-
     }
   },
 
   runAwaiting() {
-    view.addCSSLinkToHead()
-    view.eventListeners.addAwaitingListener()
-    console.log(`GREAT! ~ URL Shortener is initialized to: ${model.currentState}`)
+    urlInput.textContent = ''
+    view.renderButtons(true, false)
   },
 
   async runProcessing() {
     view.toggleProcessingAnimation(true)
     model.urlReturned = await model.fetchingData()
-    model.currentState = model.stateStore.completed
+    model.currentState = stringStore.state.COMPLETED
     controller.run(model.currentState)
   },
 
   runCompleted() {
+    view.renderButtons(false, true)
     view.toggleProcessingAnimation(false)
-    view.eventListeners.toggleFocusEffect(true)
     view.renderShortenPath(model.urlReturned)
-    view.renderCopyButton()
+    view.renderButtons(false)
   }
 }
 
+controller.initializeApp()
 controller.run(model.currentState)

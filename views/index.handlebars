@@ -5,9 +5,13 @@
   <div class="link-icon">
     <i class="fa-solid fa-link fa-2xl"></i>
   </div>
-  <form>
-    <input type="url" name="url" placeholder='https://' autocomplete="off" autofocus required>
-    <button type="button">Shorten</button>
+  <div class="input-container">
+    <div class="url" contenteditable autofocus></div>
+    <button id='shorten-button' type="button">Shorten</button>
+    <div id='completed-button-wrapper' class="display-none1">
+      <button id='copy-button' type="button">Copy</button>
+      <button id='back-button' type="button">Back</button>
+    </div>
   </form>
   <footer>
     <small>
