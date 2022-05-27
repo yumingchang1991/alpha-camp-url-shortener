@@ -1,6 +1,11 @@
 # URL Shortener (短網址產生器)
 ## Features
-1. 
+1. users could get a unique shorten-path from their input
+2. users could get alert if they submit empty input, or a url that does not with https://
+3. users will always get the same shorten-path for the same url
+4. users could click button to copy shortened path to their clipboard
+5. users could navigate to original url when navigating to shorten path
+6. users would get redirected to home page with alert message when they try to access a shorten path that does not exist
 <br><br><br>
 
 ## Technology
@@ -21,9 +26,9 @@ GET     /:shortenPath             redirect to original url
 ## Client State
 | STATE       | DEFINITION                             | STARTS ON                             | ENDS ON                |
 | ----------- | -------------------------------------- | ------------------------------------- | ---------------------- |
-| Awaiting    | app waits for user url input           | `app.load` <br> `anotherButton.click` | `shortenButton.click`  |
+| Awaiting    | app waits for user url input           | `app.load` <br> `backButton.click`    | `shortenButton.click`  |
 | Processing  | user click shorten to send data to app | `shortenButton.click`                 | when data fetched      |
-| Completed   | app returns shortened url to browser   | when data fetched                     | `anotherButton.click`  |
+| Completed   | app returns shortened url to browser   | when data fetched                     | `backButton.click`     |
 
 <br><br><br>
 
@@ -43,7 +48,7 @@ GET     /:shortenPath             redirect to original url
 | processing  | x                             | receive JSON & render page | x                                         |
 | completed   | x                             | change state to completed  | x                                         |
 | completed   | click "copy" button           | copy shorten url to board  | x                                         |
-| completed   | click "go back" button        | initialize shortener       | x                                         |
+| completed   | click "back" button           | initialize shortener       | x                                         |
 
 <br><br><br>
 
@@ -59,7 +64,8 @@ URL = {
     required: true,
     minLength: 5,
     maxLength: 5
-  }
+  },
+  useCount: Number
 }
 ```
 <br><br><br>
@@ -78,7 +84,7 @@ Type in command line below to automatically install dependencies listed in packa
 `npm i` <br>
 
 **NOTE**
-- Font awesome are linked through CDN. no actions from you, YAY!
+- Font awesome & Axios are linked through CDN. no actions from you, YAY!
 <br><br>
 
 #### step4: add environment variable to connect to your MongoDB
@@ -86,26 +92,5 @@ Type in command line below to automatically install dependencies listed in packa
 - Add a variable name `MONGODB_URI` in `.env` and assign your URI to it
 <br><br>
 
-#### step5: **Seed Your Database** by `npm run seed`, this will add 8 dummy data to database
+#### step5: **Run Application** by `npm run dev`, this will open localhost for you automatically
 <br><br>
-
-#### step6: **Run Application** by `npm run dev`, this will open localhost for you automatically
-<br><br>
-
-## Improvements Directions
-- [x] Seperate Express routing from app.js
-- [x] Seperate Model, View & Utility from app.js
-- [x] Enable user to choose how the list is sorted, by what property, and in ascending or descending order
-- [ ] Enable friendly alert when there is error modifying restaurant data (it now redirects user to homepage only)
-- [ ] Enable user to choose what target to search, is it name or category
-<br><br><br>
-
-## How To Participate
-You could interact with this project by making a pull request, with a file containing information:
-1. How you think I could improve this project
-2. How you think I could improve as a software developer
-3. Open to anything on your mind
-
-Or send messages on [LinkedIn](https://www.linkedin.com/in/yumingchang1991/) <br>
-Or in email [yumingchang1991@gmail.com](mailto:yumingchang1991@gmail.com)
-<br><br><br>
