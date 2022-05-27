@@ -12,7 +12,7 @@ body {
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .app {
@@ -66,11 +66,5 @@ footer {
 @media (min-width: 768px) {
   .app {
     transform: scale(1.5) translateY(100px);
-  }
-}
-
-@media (max-width: 768px) {
-  body {
-    align-items: flex-start;
   }
 }
