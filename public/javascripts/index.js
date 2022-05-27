@@ -1,8 +1,3 @@
-// this synthetic event will be placed on .app
-// const eventReceiveUrl = new Event('receiveUrl')
-// const APP = document.querySelector('.app')
- 
-// var declaration
 const HEAD = document.getElementsByTagName('HEAD')[0]
 const BODY = document.getElementsByTagName('BODY')[0]
 const icon = document.getElementsByTagName('i')[0]
@@ -131,7 +126,7 @@ const view = {
   eventListeners: {
     addButtonListeners() {
       window.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && model.currentState === stringStore.state.AWAITING) {
           view.eventHandlers.submitURL()
         }
       })
