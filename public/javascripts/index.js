@@ -19,13 +19,18 @@ const stringStore = {
     ROLL: 'roll',
     BACKGROUNDGRAY: 'background-gray',
     PROCESSING: 'processing',
-    DISPLAYNONE: 'display-none'
+    DISPLAYNONE: 'display-none',
+    BLUETEXT: 'blue-text'
   }
 }
 
 const utility = {
   isUrlValid() {
-    return urlInput.textContent.trim().length > 0
+    const url = urlInput.textContent.trim()
+    if (url.length > 0) {
+      return url.startsWith('https://')
+    }
+    return false 
   },
 
   isResponseValid(res) {
@@ -75,6 +80,7 @@ const view = {
   renderShortenPath(url) {
     urlInput.textContent = `${window.location.origin}/${model.urlReturned.shortenPath}`
     urlInput.setAttribute('contenteditable', false)
+    urlInput.classList.add(stringStore.class.BLUETEXT)
   },
 
   renderButtons(isShorten = true, isCompleted = true) {
@@ -107,7 +113,7 @@ const view = {
     },
     submitURL(e) {
       if (!utility.isUrlValid()) {
-        alert('Please enter a valid url')
+        alert('Please enter a valid url starts with https://')
         return
       }
       view.renderButtons(false, false)

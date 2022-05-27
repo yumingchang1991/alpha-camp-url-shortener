@@ -12,6 +12,11 @@ div.url:focus {
   outline: none;
 }
 
+div.blue-text {
+  color: rgb(50, 168, 227);
+  border: none;
+}
+
 button {
   max-width: 180px;
   font-size: 1.2rem;
