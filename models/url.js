@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 const Model = mongoose.model
 
 const UrlSchema = new Schema({
-  originalURL: {
+  originalUrl: {
     type: String,
     required: true
   },
@@ -13,7 +13,12 @@ const UrlSchema = new Schema({
     required: true,
     minlength: 5,
     maxlength: 5
+  },
+
+  useCount: {
+    type: Number,
+    default: 0
   }
 })
 
-model.exports = Model('Url', UrlSchema)
+module.exports = Model('Url', UrlSchema)
