@@ -55,7 +55,11 @@ const model = {
       .then(response => {
         if (!utility.isResponseValid(response)) {
           // error handling will go here
-          return console.log('data returned from API is not complete')
+          alert('data returned from server is not complete. check browser console')
+          console.log('incomplete data returned from server')
+          console.log('data keys should contain [originalUrl, shortenPath]')
+          console.log(response.data)
+          return
         }
         Object.assign(urlReturned, response.data)
       })
