@@ -1,6 +1,9 @@
 <div class='app'>
   <header>
     <h1>URL Shortener</h1>
+    {{#if errorMsg}}
+    <small>{{errorMsg}}</small>
+    {{/if}}
   </header>
   <div class="link-icon">
     <i class="fa-solid fa-link fa-2xl"></i>
@@ -12,11 +15,11 @@
       <button id='copy-button' type="button">Copy</button>
       <button id='back-button' type="button">Back</button>
     </div>
-  </form>
-  <footer>
-    <small>
-      designed by <author>Yu-Ming</author> @2022
-    </small>
-  </footer>
+    </form>
+    <footer>
+      <small>
+        designed by <author>Yu-Ming</author> @2022
+      </small>
+    </footer>
+  </div>
 </div>
-

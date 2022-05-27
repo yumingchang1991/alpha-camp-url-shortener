@@ -32,6 +32,7 @@ const model = {
       .findOne({ shortenPath })
       .lean()
       .then(url => Object.assign(urlFound, url))
+      .catch(e => console.error(e))
     return urlFound
   },
 
