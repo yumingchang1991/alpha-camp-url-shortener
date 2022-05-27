@@ -26,6 +26,15 @@ const model = {
     return urlFound
   },
 
+  async returnUrlFromShortenPath(shortenPath) {
+    const urlFound = Object.create(null)
+    await Url
+      .findOne({ shortenPath })
+      .lean()
+      .then(url => Object.assign(urlFound, url))
+    return urlFound
+  },
+
   generateUniqueShortenPath() {
     let uniqueShortenPath = model.generateShortenPath()
     const existingUrls = model.returnUrls() || []
