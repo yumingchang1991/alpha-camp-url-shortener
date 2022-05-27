@@ -12,6 +12,7 @@ app.engine('handlebars', engine({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
 app.use(express.static('./public'))
+app.use('/', express.urlencoded({ extended: false }))
 app.use('/urls', express.json())
 app.use(routes)
 
