@@ -5,7 +5,7 @@ router
   .route('/')
   .post(async (req, res) => {
     const { originalUrl } = req.body
-    res.json(await model.returnUrl(originalUrl))
+    return res.json(await model.returnUrl(originalUrl))
   })
 
 module.exports = router
