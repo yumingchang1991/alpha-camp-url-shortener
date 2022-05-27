@@ -11,7 +11,8 @@ const PORT = process.env.PORT || 3000
 app.engine('handlebars', engine({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
-app.use(express.urlencoded({ extended: false }))
+app.use(express.static('./public'))
+app.use('/urls', express.json())
 app.use(routes)
 
 app.listen(PORT, () => console.log(`Express is listening on localhost:${PORT}`))
