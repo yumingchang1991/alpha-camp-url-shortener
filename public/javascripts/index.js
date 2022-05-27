@@ -130,6 +130,11 @@ const view = {
 
   eventListeners: {
     addButtonListeners() {
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          view.eventHandlers.submitURL()
+        }
+      })
       shortenButton.addEventListener('click', view.eventHandlers.submitURL)
       shortenButton.addEventListener('mouseenter', view.eventHandlers.addFocusEffect)
       shortenButton.addEventListener('mouseleave', view.eventHandlers.removeFocusEffect)
@@ -175,7 +180,6 @@ const controller = {
         break
       }
       case stringStore.state.COMPLETED:
-        console.log('running completed branch')
         controller.runCompleted()
         break
     }
