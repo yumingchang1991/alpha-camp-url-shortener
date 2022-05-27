@@ -14,7 +14,7 @@ View Engine: `express-handlebars@6.0.5` <br>
 ```
 GET     /                         render a page for url input
 POST    /urls                     create a new url in MongoDB
-GET     /:shortUrl                redirect to original url
+GET     /:shortenPath             redirect to original url
 ```
 <br><br><br>
 
