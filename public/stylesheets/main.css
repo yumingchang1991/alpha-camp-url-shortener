@@ -65,7 +65,7 @@ footer {
 
 @media (min-width: 768px) {
   .app {
-    transform: scale(2) translateY(100px);
+    transform: scale(1.5) translateY(100px);
   }
 }
 
