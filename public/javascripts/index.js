@@ -125,7 +125,8 @@ const view = {
       controller.run(model.currentState)
     },
     copyToBoard(e) {
-      navigator.clipboard.writeText(urlInput.textContent)
+      // navigator.clipboard.writeText(urlInput.textContent)
+      navigator.clipboard.writeText(`${window.location.origin}/${model.urlReturned.shortenPath}`)
       alert('shortenPath is copied to clipboard!')
     },
     redirectToHome(e) {
