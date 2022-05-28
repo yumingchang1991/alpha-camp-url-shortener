@@ -5,12 +5,14 @@ const Model = mongoose.model
 const UrlSchema = new Schema({
   originalUrl: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
 
   shortenPath: {
     type: String,
     required: true,
+    unique: true,
     minlength: 5,
     maxlength: 5
   },
