@@ -128,8 +128,10 @@ const view = {
         const PORT = window.location.port ? `:${window.location.port}` : ''
         window.location.origin = `${window.location.protocol}//${window.location.hostname}${PORT}`
       }
-      navigator.clipboard.writeText(`${window.location.origin}/${model.urlReturned.shortenPath}`)
-      alert('shortenPath is copied to clipboard!')
+      navigator.clipboard
+        .writeText(`${window.location.origin}/${model.urlReturned.shortenPath}`)
+        .then(() => alert('shortenPath is copied to clipboard!'))
+        .catch((err) => alert('error in copying shorten url: ', err))
     },
     redirectToHome(e) {
       window.location.replace(window.location.origin)
