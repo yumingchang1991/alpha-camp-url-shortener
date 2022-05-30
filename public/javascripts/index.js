@@ -163,8 +163,6 @@ const view = {
     // remove animation
     icon.classList.remove(stringStore.class.ROLL)
     icon.classList.add(stringStore.class.ROTATE)
-    // view when completed
-    urlInput.disabled = true
   },
 }
 
