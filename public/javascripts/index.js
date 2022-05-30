@@ -126,6 +126,10 @@ const view = {
     },
     copyToBoard(e) {
       // navigator.clipboard.writeText(urlInput.textContent)
+      if (!window.location.origin) {
+        const PORT = window.location.port ? `:${window.location.port}` : ''
+        window.location.origin = `${window.location.protocol}//${window.location.hostname}${PORT}`
+      }
       navigator.clipboard.writeText(`${window.location.origin}/${model.urlReturned.shortenPath}`)
       alert('shortenPath is copied to clipboard!')
     },
