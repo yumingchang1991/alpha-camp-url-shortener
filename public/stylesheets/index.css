@@ -1,4 +1,4 @@
-div.url {
+input.url {
   font-size: 1.2rem;
   padding: 0.5rem;
   border: none;
@@ -8,11 +8,11 @@ div.url {
   border-bottom: 1px solid #e6e6e6
 }
 
-div.url:focus {
+input.url:focus {
   outline: none;
 }
 
-div.blue-text {
+input.blue-text {
   color: rgb(50, 168, 227);
   border: none;
 }

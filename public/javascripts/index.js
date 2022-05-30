@@ -1,7 +1,7 @@
 const HEAD = document.getElementsByTagName('HEAD')[0]
 const BODY = document.getElementsByTagName('BODY')[0]
 const icon = document.getElementsByTagName('i')[0]
-const urlInput = document.querySelector('div.url')
+const urlInput = document.getElementById('url-input')
 const shortenButton = document.getElementById('shorten-button')
 const completedButtonWrapper = document.getElementById('completed-button-wrapper')
 const copyButton = document.getElementById('copy-button')
@@ -26,7 +26,7 @@ const stringStore = {
 
 const utility = {
   isUrlValid() {
-    const url = urlInput.textContent.trim()
+    const url = urlInput.value.trim()
     if (url.length > 0) {
       return url.startsWith('https://')
     }
@@ -51,7 +51,7 @@ const model = {
     const APIEndpoint = window.location.origin + path
     let urlReturned = Object.create(null)
     await axios
-      .post(APIEndpoint, { originalUrl: urlInput.textContent.trim() })
+      .post(APIEndpoint, { originalUrl: urlInput.value.trim() })
       .then(response => {
         if (!utility.isResponseValid(response)) {
           // error handling will go here
@@ -82,8 +82,7 @@ const view = {
   },
 
   renderShortenPath(url) {
-    urlInput.textContent = `${window.location.origin}/${model.urlReturned.shortenPath}`
-    urlInput.setAttribute('contenteditable', false)
+    urlInput.value = `${window.location.origin}/${model.urlReturned.shortenPath}`
     urlInput.classList.add(stringStore.class.BLUETEXT)
   },
 
@@ -99,8 +98,8 @@ const view = {
       return
     }
     if (!isShorten && !isCompleted) {
-      shortenButton.classList.remove(stringStore.class.DISPLAYNONE)
-      completedButtonWrapper.classList.remove(stringStore.class.DISPLAYNONE)
+      shortenButton.classList.add(stringStore.class.DISPLAYNONE)
+      completedButtonWrapper.classList.add(stringStore.class.DISPLAYNONE)
       return
     }
     console.log('error: cannot display shorten button & completed buttons at the same time')
@@ -125,7 +124,6 @@ const view = {
       controller.run(model.currentState)
     },
     copyToBoard(e) {
-      // navigator.clipboard.writeText(urlInput.textContent)
       if (!window.location.origin) {
         const PORT = window.location.port ? `:${window.location.port}` : ''
         window.location.origin = `${window.location.protocol}//${window.location.hostname}${PORT}`
@@ -166,7 +164,7 @@ const view = {
     icon.classList.remove(stringStore.class.ROLL)
     icon.classList.add(stringStore.class.ROTATE)
     // view when completed
-    urlInput.disabled = false
+    urlInput.disabled = true
   },
 }
 
@@ -196,7 +194,8 @@ const controller = {
   },
 
   runAwaiting() {
-    urlInput.textContent = ''
+    urlInput.value = ''
+    urlInput.disabled = false
     view.renderButtons(true, false)
   },
 

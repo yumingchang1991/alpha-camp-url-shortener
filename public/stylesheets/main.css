@@ -32,7 +32,7 @@ header small {
 }
 
 h1:hover,
-div.url:hover,
+input.url:hover,
 i:hover,
 footer:hover,
 button:hover {
